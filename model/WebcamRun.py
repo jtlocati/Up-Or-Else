@@ -1,6 +1,7 @@
 import cv2
 from ultralytics import YOLO
 import pygame
+from datetime import datetime
 
 WEIGHTS = "runs/detect/lying_in_bed/weights/best.pt"
 BOOM_SOUND_PATH = "media/boom.mp3"
@@ -11,7 +12,7 @@ CAM = 1
 Confidence = .6
 
 #opens webcam and applys YOLO model to all frames
-def main():
+def main(end_time):
     model = YOLO(WEIGHTS)
     pygame.mixer.init()
     boom_sound = pygame.mixer.Sound(BOOM_SOUND_PATH)
@@ -27,6 +28,8 @@ def main():
     #Frab frame by frame, then apply YOLO to seek a label
     cont = True
     while cont:
+        if datetime.now() >= end_time:
+            break
         OK, frame = camera.read()
 
         if not OK:

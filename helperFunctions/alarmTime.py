@@ -21,7 +21,7 @@ def parse_alarm_time(usr_txt, now):
 
     #partail format parce:
     try:
-        partail_datetime = datetime.strptime(clean_txt, TIME_ONLY_FORMAT)
+        partail_datetime = datetime.strptime(clean_txt, TIME_ONLY_FORMAT).time()
     except ValueError:
         return None
 
@@ -47,6 +47,6 @@ def AskTimeInTerm ():
         if alarm_time is None:
             print("That time is invalid or already passed. Try again, e.g. 07:30")
             continue
-        
+
         print("Alarm set for", alarm_time.strftime("%A %Y-%m-%d at %H:%M"))
         return alarm_time
