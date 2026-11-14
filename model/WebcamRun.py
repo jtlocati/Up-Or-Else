@@ -1,7 +1,9 @@
 import cv2
 from ultralytics import YOLO
+import pygame
 
 WEIGHTS = "runs/detect/lying_in_bed/weights/best.pt"
+BOOM_SOUND_PATH = "media/boom.mp3"
 
 CAM = 1
 
@@ -11,6 +13,8 @@ Confidence = .6
 #opens webcam and applys YOLO model to all frames
 def main():
     model = YOLO(WEIGHTS)
+    pygame.mixer.init()
+    boom_sound = pygame.mixer.Sound(BOOM_SOUND_PATH)
 
     #open the cam using windows DSHOW driver
     camera = cv2.VideoCapture(CAM, cv2.CAP_DSHOW)
@@ -51,6 +55,9 @@ def main():
             status_text = "Laying"
         else:
             status_text = "n/a"
+        if status_text == "Laying":
+            if not pygame.mixer.get_busy():
+                boom_sound.play()
         cv2.putText(annotation, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
         #show window
