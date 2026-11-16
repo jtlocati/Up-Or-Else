@@ -11,7 +11,6 @@ SOUND_PATHS = {
     "wakeup": "media/wakeup.mp3",
     "pipe": "media/pipesound.mp3"
 }
-
 CAM = 1
 
 #model conf, inital set to 0.5 for regression testing
@@ -23,6 +22,9 @@ def main(end_time):
     pygame.mixer.init()
     boom_sound = pygame.mixer.Sound(SOUND_PATHS.get("boom"))
     wakeup_sound = pygame.mixer.Sound(SOUND_PATHS.get("wakeup"))
+    half_length_ms = int((wakeup_sound.get_length()*1000)/2)
+    pipe_sound = pygame.mixer.Sound(SOUND_PATHS.get)("pipe")
+
 
     #open the cam using windows DSHOW driver
     camera = cv2.VideoCapture(CAM, cv2.CAP_DSHOW)
@@ -72,7 +74,10 @@ def main(end_time):
                 times_sleepy += 1
                 boom_sound.play()
                 if times_sleepy >3:
-                    wakeup_sound.play()
+                    wakeup_sound.play(maxtime=half_length_ms)
+                if times_sleepy > 5:
+                    pipe_sound.play()
+                    times_sleepy = 0
             
         cv2.putText(annotation, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
