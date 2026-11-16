@@ -15,7 +15,7 @@ SOUND_PATHS = {
 CAM = 1
 
 #model conf, inital set to 0.5 for regression testing
-Confidence = .5
+Confidence = .7
 
 #opens webcam and applys YOLO model to all frames
 def main(end_time):
@@ -29,6 +29,7 @@ def main(end_time):
 
 
     #open the cam using windows DSHOW driver
+
     camera = cv2.VideoCapture(CAM, cv2.CAP_DSHOW)
     #cam failsafe
     if not camera.isOpened():
@@ -39,6 +40,7 @@ def main(end_time):
     #Frab frame by frame, then apply YOLO to seek a label
     times_sleepy = 0
     Times_up = 0
+    PlayHorray = True
     cont = True
     while cont:
         if datetime.now() >= end_time:
@@ -86,8 +88,9 @@ def main(end_time):
                     pipe_sound.play()
                     times_sleepy = 0
             
-        if status_text == "n/a" and Times_up > 10:
+        if status_text == "n/a" and Times_up > 200 and PlayHorray:
             yay_sound.play()
+            PlayHorray =False
             
         cv2.putText(annotation, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
