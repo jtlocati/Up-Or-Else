@@ -26,5 +26,9 @@ def getLightInfo():
         print("error gained on responsce")
         return []
 
-    responce.json()
-    device_ID = responce.json().responce_data.get("data", [])
+    device_ID = responce.json().get("data", [])
+    return device_ID
+
+devie_ID = getLightInfo()
+
+print(devie_ID)
