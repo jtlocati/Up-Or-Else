@@ -3,9 +3,9 @@ import uuid
 import requests
 from helperFunctions import getlightinfo
 
-LIGHTINFO = [{"sku": f"{getlightinfo.SKU[0]}", "device": f"{getlightinfo.DEVICE[0]}"}]
+LIGHTINFO = [{"sku": f"{getlightinfo.SKU}", "device": f"{getlightinfo.DEVICE}"}]
 
-def lightpower(powerValue):
+def lightpower(unit, device_id, powerValue):
     FUNCTIONS = {
         "type": "devices.capabilities.on_off",
         "instance": "powerSwitch",
@@ -13,8 +13,8 @@ def lightpower(powerValue):
     }
 
     payload = {
-        "sku": getlightinfo.SKU[0],
-        "device": getlightinfo.DEVICE[0],
+        "sku": unit,
+        "device": device_id,
         "capability": FUNCTIONS
     }
 
