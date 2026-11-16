@@ -1,3 +1,6 @@
 ultralytics
 roboflow
 opencv-python
+requests
+datetime
+pygame
