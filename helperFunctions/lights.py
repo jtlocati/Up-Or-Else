@@ -2,6 +2,7 @@ import os
 import uuid
 import requests
 from helperFunctions import getlightinfo
+import time
 
 LIGHTINFO = [{"sku": f"{getlightinfo.SKU}", "device": f"{getlightinfo.DEVICE}"}]
 
@@ -33,17 +34,18 @@ def lightpower(unit, device_id, powerValue):
         return False
     return True
 
-def TurnOnLights():
+def TurnOnLights(Value):
     device_list = getlightinfo.getLightInfo()
     lights_sucess = 0
     for light in device_list:
         sku = light["sku"]
         dev = light["device"]
-        action = lightpower(sku, dev, 1)
+        action = lightpower(sku, dev, Value)
+        time.sleep(0.1)
         if action:
             lights_sucess+=1
 
     return lights_sucess
 
 
-TurnOnLights()
+TurnOnLights(0)
