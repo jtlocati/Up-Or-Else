@@ -9,12 +9,13 @@ WEIGHTS = "runs/detect/lying_in_bed/weights/best.pt"
 SOUND_PATHS = {
     "boom": "media/boom.mp3",
     "wakeup": "media/wakeup.mp3",
-    "pipe": "media/pipesound.mp3"
+    "pipe": "media/pipesound.mp3",
+    "yay": "media/yay.mp3"
 }
 CAM = 1
 
 #model conf, inital set to 0.5 for regression testing
-Confidence = .6
+Confidence = .5
 
 #opens webcam and applys YOLO model to all frames
 def main(end_time):
@@ -23,7 +24,8 @@ def main(end_time):
     boom_sound = pygame.mixer.Sound(SOUND_PATHS.get("boom"))
     wakeup_sound = pygame.mixer.Sound(SOUND_PATHS.get("wakeup"))
     half_length_ms = int((wakeup_sound.get_length()*1000)/2)
-    pipe_sound = pygame.mixer.Sound(SOUND_PATHS.get)("pipe")
+    pipe_sound = pygame.mixer.Sound(SOUND_PATHS.get("pipe"))
+    yay_sound = pygame.mixer.Sound(SOUND_PATHS.get("yay"))
 
 
     #open the cam using windows DSHOW driver
@@ -36,6 +38,7 @@ def main(end_time):
     #main model application loop
     #Frab frame by frame, then apply YOLO to seek a label
     times_sleepy = 0
+    Times_up = 0
     cont = True
     while cont:
         if datetime.now() >= end_time:
@@ -68,16 +71,23 @@ def main(end_time):
             status_text = "Laying"
         else:
             status_text = "n/a"
+            Times_up += 1
         if status_text == "Laying":
             times_sleepy += 1
+            Times_up = 0
             if not pygame.mixer.get_busy():
                 times_sleepy += 1
                 boom_sound.play()
                 if times_sleepy >3:
                     wakeup_sound.play(maxtime=half_length_ms)
+                    if times_sleepy % 2 == 0:
+                        boom_sound.play()
                 if times_sleepy > 5:
                     pipe_sound.play()
                     times_sleepy = 0
+            
+        if status_text == "n/a" and Times_up > 10:
+            yay_sound.play()
             
         cv2.putText(annotation, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
