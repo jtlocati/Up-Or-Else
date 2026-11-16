@@ -29,7 +29,7 @@ def lightpower(unit, device_id, powerValue):
         print("somthings arraie ;(")
         return False
     if responce.status_code != 200:
-        print("nasty ahh responce")
+        print("nasty ahh responce:", responce.status_code)
         return False
     return True
 
