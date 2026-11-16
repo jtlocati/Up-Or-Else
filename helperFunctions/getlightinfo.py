@@ -28,9 +28,9 @@ def getLightInfo() -> dict:
     device_ID = responce.json().get("data", [])
     return device_ID
 
+device_ID = getLightInfo()
+for ID in device_ID:
+    SKU = ID["sku"]
+    DEVICE = ID["device"]
 if __name__ == "__main__":
-    device_ID = getLightInfo()
-    for ID in device_ID:
-        SKU = ID["sku"]
-        DEVICE = ID["device"]
         print(f"SKU: {SKU}\nDEVICE: {DEVICE}")
