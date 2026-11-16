@@ -11,6 +11,8 @@ end_time = alarm_time + timedelta(minutes=40)
 while datetime.now() < alarm_time:
     time.sleep(1)
 
+print(f"{'*'*60}WAKING YOU UP NOW!!!!{'*'*60}")
+time.sleep(5)
 TurnOnLights(1)
 WebcamRun.main(end_time)
 print("Alarm window over.")
