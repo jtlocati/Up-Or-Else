@@ -19,7 +19,7 @@ def lightpower(unit, device_id, powerValue):
     }
 
     full_request = {
-        "requestID": str(uuid.uuid4()),
+        "requestId": str(uuid.uuid4()),
         "payload": payload
     }
 
