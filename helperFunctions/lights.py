@@ -34,8 +34,16 @@ def lightpower(unit, device_id, powerValue):
     return True
 
 def TurnOnLights():
-    for light in LIGHTINFO:
-        lightpower(1)
+    device_list = getlightinfo.getLightInfo()
+    lights_sucess = 0
+    for light in device_list:
+        sku = light["sku"]
+        dev = light["device"]
+        action = lightpower(sku, dev, 1)
+        if action:
+            lights_sucess+=1
+
+    return lights_sucess
 
 
 TurnOnLights()
