@@ -47,5 +47,5 @@ def TurnOnLights(Value):
 
     return lights_sucess
 
-
-TurnOnLights(0)
+if __name__ == "__main__":
+    TurnOnLights(0)
