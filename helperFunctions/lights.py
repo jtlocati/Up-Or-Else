@@ -3,6 +3,8 @@ import uuid
 import requests
 from helperFunctions import getlightinfo
 
+LIGHTINFO = [{"sku": f"{getlightinfo.SKU}", "device": f"{getlightinfo.DEVICE}"}]
+
 def lightpower(powerValue):
     FUNCTIONS = {
         "type": "devices.capabilities.on_off",
@@ -30,3 +32,10 @@ def lightpower(powerValue):
         print("nasty ahh responce")
         return False
     return True
+
+def TurnOnLights():
+    for light in LIGHTINFO:
+        lightpower(1)
+
+
+TurnOnLights()

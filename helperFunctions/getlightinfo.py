@@ -8,7 +8,6 @@ GOVEE_KEEY = os.getenv("GOVEE_KEEY")
 DEVICES_URL = "https://openapi.api.govee.com/router/api/v1/user/devices"
 CONTROL_URL = "https://openapi.api.govee.com/router/api/v1/device/control"
 
-LIGHTINFO = [{"sku": "", "device": ""}]
 header = {
     "Govee-API-Key": GOVEE_KEEY,
     "Content-Type": "application/json"
