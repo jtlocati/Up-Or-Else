@@ -8,7 +8,8 @@ import time
 WEIGHTS = "runs/detect/lying_in_bed/weights/best.pt"
 SOUND_PATHS = {
     "boom": "media/boom.mp3",
-    "wakeup": "media/wakeup.mp3"
+    "wakeup": "media/wakeup.mp3",
+    "pipe": "media/pipesound.mp3"
 }
 
 CAM = 1
