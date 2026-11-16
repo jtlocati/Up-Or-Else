@@ -3,9 +3,13 @@ from ultralytics import YOLO
 import pygame
 from datetime import datetime
 from helperFunctions.lights import TurnOnLights
+import time
 
 WEIGHTS = "runs/detect/lying_in_bed/weights/best.pt"
-BOOM_SOUND_PATH = "media/boom.mp3"
+SOUND_PATHS = {
+    "boom": "media/boom.mp3",
+    "wakeup": "media/wakeup.mp3"
+}
 
 CAM = 1
 
@@ -16,7 +20,8 @@ Confidence = .6
 def main(end_time):
     model = YOLO(WEIGHTS)
     pygame.mixer.init()
-    boom_sound = pygame.mixer.Sound(BOOM_SOUND_PATH)
+    boom_sound = pygame.mixer.Sound(SOUND_PATHS.get("boom"))
+    wakeup_sound = pygame.mixer.Sound(SOUND_PATHS.get("wakeup"))
 
     #open the cam using windows DSHOW driver
     camera = cv2.VideoCapture(CAM, cv2.CAP_DSHOW)
@@ -27,6 +32,7 @@ def main(end_time):
 
     #main model application loop
     #Frab frame by frame, then apply YOLO to seek a label
+    times_sleepy = 0
     cont = True
     while cont:
         if datetime.now() >= end_time:
@@ -60,8 +66,13 @@ def main(end_time):
         else:
             status_text = "n/a"
         if status_text == "Laying":
+            times_sleepy += 1
             if not pygame.mixer.get_busy():
+                times_sleepy += 1
                 boom_sound.play()
+                if times_sleepy >3:
+                    wakeup_sound.play()
+            
         cv2.putText(annotation, status_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2)
 
         #show window
