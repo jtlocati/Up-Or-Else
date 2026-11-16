@@ -14,7 +14,7 @@ header = {
     "Content-Type": "application/json"
 }
 
-def getLightInfo():
+def getLightInfo() -> dict:
     try:
         responce = requests.get(DEVICES_URL, headers=header, timeout=50)
     except requests.RequestException:
