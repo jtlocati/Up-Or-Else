@@ -3,7 +3,7 @@ import uuid
 import requests
 from helperFunctions import getlightinfo
 
-LIGHTINFO = [{"sku": f"{getlightinfo.SKU}", "device": f"{getlightinfo.DEVICE}"}]
+LIGHTINFO = [{"sku": f"{getlightinfo.SKU[0]}", "device": f"{getlightinfo.DEVICE[0]}"}]
 
 def lightpower(powerValue):
     FUNCTIONS = {
@@ -13,8 +13,8 @@ def lightpower(powerValue):
     }
 
     payload = {
-        "sku": getlightinfo.SKU,
-        "device": getlightinfo.DEVICE,
+        "sku": getlightinfo.SKU[0],
+        "device": getlightinfo.DEVICE[0],
         "capability": FUNCTIONS
     }
 
