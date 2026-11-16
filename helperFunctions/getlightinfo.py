@@ -32,3 +32,7 @@ def getLightInfo() -> dict:
 devie_ID = getLightInfo()
 
 print(devie_ID)
+DEVICE = [item['device'] for item in devie_ID]
+SKU = [item['sku'] for item in devie_ID]
+
+print(f"SKU: {SKU}\nDEVICE: {DEVICE}")
