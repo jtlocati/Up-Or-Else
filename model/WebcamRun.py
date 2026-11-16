@@ -2,6 +2,7 @@ import cv2
 from ultralytics import YOLO
 import pygame
 from datetime import datetime
+from helperFunctions.lights import TurnOnLights
 
 WEIGHTS = "runs/detect/lying_in_bed/weights/best.pt"
 BOOM_SOUND_PATH = "media/boom.mp3"
